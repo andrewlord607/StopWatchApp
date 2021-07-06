@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="StopWatchApp.StopWatchTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StopWatchApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="400" Background="White">
+    <UserControl.Resources>
+        <local:BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <local:BooleanToVisibilityConverter x:Key="BoolToVisInvert" True="Hidden" False="Visible"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button 
+            Command="{Binding StartCommand}"
+            Visibility="{Binding IsStop, Converter={StaticResource BoolToVis}}" 
+            Grid.Row="0" Grid.ColumnSpan="2" FontSize="25" Margin="10">
+            Запустить
+        </Button>
+        <Button 
+            Command="{Binding PauseCommand}" 
+            Visibility="{Binding IsStop, Converter={StaticResource BoolToVisInvert}}" 
+            Content="{Binding PauseContinueLabel}"  
+            Grid.Row="0" Grid.Column="0" FontSize="25" Margin="10">
+        </Button>
+        <Button 
+            Command="{Binding ResetCommand}"
+            Visibility="{Binding IsStop, Converter={StaticResource BoolToVisInvert}}" 
+            IsEnabled="{Binding IsPaused}" 
+            Grid.Row="0" Grid.Column="1" FontSize="25" Margin="10">
+            Сброс
+        </Button>
+        
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding CurrentTime}" />
+    </Grid>
+</UserControl>
